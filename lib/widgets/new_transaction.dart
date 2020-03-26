@@ -47,56 +47,68 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Column(
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(labelText: 'Title'),
-            controller: titleController,
-            onSubmitted: (_) => submitData(),
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
           ),
-          TextField(
-            decoration: InputDecoration(labelText: 'Amount'),
-            controller: amountController,
-            keyboardType: TextInputType.number,
-            onSubmitted: (_) => submitData(),
-          ),
-          Container(
-            height: 70,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    selectedDate == null
-                        ? 'No Date Chosen'
-                        : 'Picked Date : ${DateFormat.yMd().format(selectedDate)}',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                controller: titleController,
+                onSubmitted: (_) => submitData(),
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => submitData(),
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        selectedDate == null
+                            ? 'No Date Chosen'
+                            : 'Picked Date : ${DateFormat.yMd().format(selectedDate)}',
+                      ),
+                    ),
+                    FlatButton.icon(
+                      onPressed: datePicker,
+                      icon: Icon(Icons.calendar_today),
+                      label: Text(
+                        'Choose Date',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              RaisedButton(
+                onPressed: submitData,
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  'Submit',
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
-                FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  onPressed: datePicker,
-                  child: Text(
-                    'Choose Date',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-          RaisedButton(
-            onPressed: submitData,
-            color: Theme.of(context).primaryColor,
-            child: Text(
-              'Submit',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
